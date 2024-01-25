@@ -1,9 +1,21 @@
-const http = require("http");
+const axios = require("axios");
+const express = require("express");
 
-const server = http.createServer(function (request, response) {
-  response.writeHead(200, { "Content-Type": "text/plain" });
-  response.end("Cheese help\n");
+const server = express();
+
+const PORT = process.env.port || 3000;
+
+const getData = async (siteAddress) => {
+  try {
+    const response = await axios.get(siteAddress);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+server.listen(PORT, () => {
+  console.log(`server is running on PORT:${PORT}`);
 });
 
-server.listen(8000);
-console.log("Server running at http://127.0.0.1:8000/");
+module.exports = { getData };
